@@ -12,6 +12,13 @@
 		CBBC58FC1F7820DC00EE0AE8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBBC58FA1F7820DC00EE0AE8 /* Main.storyboard */; };
 		CBBC58FE1F7820DC00EE0AE8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBBC58FD1F7820DC00EE0AE8 /* Assets.xcassets */; };
 		CBBC59011F7820DC00EE0AE8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBBC58FF1F7820DC00EE0AE8 /* LaunchScreen.storyboard */; };
+		CBBC590B1F78252300EE0AE8 /* SpotifyAudioPlayback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBBC59081F78252300EE0AE8 /* SpotifyAudioPlayback.framework */; };
+		CBBC590C1F78252300EE0AE8 /* SpotifyAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBBC59091F78252300EE0AE8 /* SpotifyAuthentication.framework */; };
+		CBBC590D1F78252300EE0AE8 /* SpotifyMetadata.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBBC590A1F78252300EE0AE8 /* SpotifyMetadata.framework */; };
+		CBBC59101F78255100EE0AE8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBBC590F1F78255100EE0AE8 /* AVFoundation.framework */; };
+		CBBC59121F78256500EE0AE8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBBC59111F78256500EE0AE8 /* SystemConfiguration.framework */; };
+		CBBC59161F78273600EE0AE8 /* BridgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CBBC59151F78273600EE0AE8 /* BridgeViewController.m */; };
+		CBBC59181F7828C500EE0AE8 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBC59171F7828C500EE0AE8 /* Song.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +29,15 @@
 		CBBC58FD1F7820DC00EE0AE8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CBBC59001F7820DC00EE0AE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CBBC59021F7820DC00EE0AE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CBBC59081F78252300EE0AE8 /* SpotifyAudioPlayback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyAudioPlayback.framework; sourceTree = "<group>"; };
+		CBBC59091F78252300EE0AE8 /* SpotifyAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyAuthentication.framework; sourceTree = "<group>"; };
+		CBBC590A1F78252300EE0AE8 /* SpotifyMetadata.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyMetadata.framework; sourceTree = "<group>"; };
+		CBBC590F1F78255100EE0AE8 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		CBBC59111F78256500EE0AE8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		CBBC59131F78273500EE0AE8 /* waveRider-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "waveRider-Bridging-Header.h"; sourceTree = "<group>"; };
+		CBBC59141F78273600EE0AE8 /* BridgeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeViewController.h; sourceTree = "<group>"; };
+		CBBC59151F78273600EE0AE8 /* BridgeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeViewController.m; sourceTree = "<group>"; };
+		CBBC59171F7828C500EE0AE8 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +45,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBBC59121F78256500EE0AE8 /* SystemConfiguration.framework in Frameworks */,
+				CBBC59101F78255100EE0AE8 /* AVFoundation.framework in Frameworks */,
+				CBBC590B1F78252300EE0AE8 /* SpotifyAudioPlayback.framework in Frameworks */,
+				CBBC590D1F78252300EE0AE8 /* SpotifyMetadata.framework in Frameworks */,
+				CBBC590C1F78252300EE0AE8 /* SpotifyAuthentication.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,8 +59,12 @@
 		CBBC58EA1F7820DC00EE0AE8 = {
 			isa = PBXGroup;
 			children = (
+				CBBC59081F78252300EE0AE8 /* SpotifyAudioPlayback.framework */,
+				CBBC59091F78252300EE0AE8 /* SpotifyAuthentication.framework */,
+				CBBC590A1F78252300EE0AE8 /* SpotifyMetadata.framework */,
 				CBBC58F51F7820DC00EE0AE8 /* waveRider */,
 				CBBC58F41F7820DC00EE0AE8 /* Products */,
+				CBBC590E1F78255000EE0AE8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,8 +85,21 @@
 				CBBC58FD1F7820DC00EE0AE8 /* Assets.xcassets */,
 				CBBC58FF1F7820DC00EE0AE8 /* LaunchScreen.storyboard */,
 				CBBC59021F7820DC00EE0AE8 /* Info.plist */,
+				CBBC59141F78273600EE0AE8 /* BridgeViewController.h */,
+				CBBC59151F78273600EE0AE8 /* BridgeViewController.m */,
+				CBBC59131F78273500EE0AE8 /* waveRider-Bridging-Header.h */,
+				CBBC59171F7828C500EE0AE8 /* Song.swift */,
 			);
 			path = waveRider;
+			sourceTree = "<group>";
+		};
+		CBBC590E1F78255000EE0AE8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CBBC59111F78256500EE0AE8 /* SystemConfiguration.framework */,
+				CBBC590F1F78255100EE0AE8 /* AVFoundation.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -97,6 +135,7 @@
 					CBBC58F21F7820DC00EE0AE8 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 9G8Q93AKJL;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -137,6 +176,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBBC59181F7828C500EE0AE8 /* Song.swift in Sources */,
+				CBBC59161F78273600EE0AE8 /* BridgeViewController.m in Sources */,
 				CBBC58F91F7820DC00EE0AE8 /* ViewController.swift in Sources */,
 				CBBC58F71F7820DC00EE0AE8 /* AppDelegate.swift in Sources */,
 			);
@@ -259,11 +300,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 9G8Q93AKJL;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = waveRider/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.npb.waveRider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "waveRider/waveRider-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -272,11 +321,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 9G8Q93AKJL;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = waveRider/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.npb.waveRider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "waveRider/waveRider-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
