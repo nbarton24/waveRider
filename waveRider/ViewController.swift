@@ -42,7 +42,6 @@ class ViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, SPTAu
         super.viewDidLoad()
         setup()
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     //--------------------------------------
@@ -57,7 +56,6 @@ class ViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, SPTAu
             self.player!.delegate = self
             try! player?.start(withClientId: auth.clientID)
             self.player!.login(withAccessToken: authSession.accessToken)
-            
         }else{
             //TODO: Handle situation where player not initialized
             print("Player not initialized successfully")
@@ -78,8 +76,6 @@ class ViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, SPTAu
             self.session = firstTimeSession
             
             initializaPlayer(authSession: session)
-            //self.loginButton.isHidden = true
-            //self.buttonsView.isHidden = false
         }else{
             print("Nah.")
         }
@@ -88,14 +84,22 @@ class ViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, SPTAu
     
     func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController!) {
         // after a user authenticates a session, the SPTAudioStreamingController is then initialized and this method called
-        self.player?.playSpotifyURI("spotify:track:6ScJMrlpiLfZUGtWp4QIVt", startingWith: 0, startingWithPosition: 0, callback: { (error) in
-            if (error == nil) {
-                print("playing!")
-            }else{
-                print("Error - \(error)")
-            }
-            
-        })
+//        self.player?.playSpotifyURI("spotify:track:6ScJMrlpiLfZUGtWp4QIVt", startingWith: 0, startingWithPosition: 0, callback: { (error) in
+//            if (error == nil) {
+//                print("playing!")
+//            }else{
+//                print("Error - \(error)")
+//            }
+//            
+//        })
+//        
+//        self.player?.setIsPlaying(false, callback: {error in
+//            if (error == nil) {
+//                print("paused!")
+//            }else{
+//                print("Error - \(error)")
+//            }
+//        })
         
     }
     
@@ -113,6 +117,14 @@ class ViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, SPTAu
             }
         }
     }
+    
+    @IBAction func showViewButtonPressed(_ sender: Any) {
+        
+        let pvc = PlayerViewController()
+        self.present(pvc, animated: true, completion: nil)
+        
+    }
+    
     
     
     //--------------------------------------

@@ -19,6 +19,8 @@
 		CBBC59121F78256500EE0AE8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBBC59111F78256500EE0AE8 /* SystemConfiguration.framework */; };
 		CBBC59161F78273600EE0AE8 /* BridgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CBBC59151F78273600EE0AE8 /* BridgeViewController.m */; };
 		CBBC59181F7828C500EE0AE8 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBC59171F7828C500EE0AE8 /* Song.swift */; };
+		CBBC591B1F78348700EE0AE8 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBC59191F78348700EE0AE8 /* PlayerViewController.swift */; };
+		CBBC591C1F78348700EE0AE8 /* PlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CBBC591A1F78348700EE0AE8 /* PlayerViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		CBBC59141F78273600EE0AE8 /* BridgeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeViewController.h; sourceTree = "<group>"; };
 		CBBC59151F78273600EE0AE8 /* BridgeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeViewController.m; sourceTree = "<group>"; };
 		CBBC59171F7828C500EE0AE8 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
+		CBBC59191F78348700EE0AE8 /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
+		CBBC591A1F78348700EE0AE8 /* PlayerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,8 @@
 				CBBC59151F78273600EE0AE8 /* BridgeViewController.m */,
 				CBBC59131F78273500EE0AE8 /* waveRider-Bridging-Header.h */,
 				CBBC59171F7828C500EE0AE8 /* Song.swift */,
+				CBBC59191F78348700EE0AE8 /* PlayerViewController.swift */,
+				CBBC591A1F78348700EE0AE8 /* PlayerViewController.xib */,
 			);
 			path = waveRider;
 			sourceTree = "<group>";
@@ -164,6 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBBC59011F7820DC00EE0AE8 /* LaunchScreen.storyboard in Resources */,
+				CBBC591C1F78348700EE0AE8 /* PlayerViewController.xib in Resources */,
 				CBBC58FE1F7820DC00EE0AE8 /* Assets.xcassets in Resources */,
 				CBBC58FC1F7820DC00EE0AE8 /* Main.storyboard in Resources */,
 			);
@@ -180,6 +187,7 @@
 				CBBC59161F78273600EE0AE8 /* BridgeViewController.m in Sources */,
 				CBBC58F91F7820DC00EE0AE8 /* ViewController.swift in Sources */,
 				CBBC58F71F7820DC00EE0AE8 /* AppDelegate.swift in Sources */,
+				CBBC591B1F78348700EE0AE8 /* PlayerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
