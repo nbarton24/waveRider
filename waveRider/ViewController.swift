@@ -40,6 +40,8 @@ class ViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, SPTAu
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -57,7 +59,8 @@ class ViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, SPTAu
             self.player!.login(withAccessToken: authSession.accessToken)
             
         }else{
-            
+            //TODO: Handle situation where player not initialized
+            print("Player not initialized successfully")
         }
         
     }
@@ -97,8 +100,20 @@ class ViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, SPTAu
     }
     
     //--------------------------------------
-    // MARK: Outlet Methods
+    // MARK: Action Methods
     //--------------------------------------
+    
+    @IBAction func loginButtonPressed(_ sender: Any) {
+        print("Button Pressed")
+        if UIApplication.shared.openURL(loginUrl!) {
+            if (auth.canHandle(auth.redirectURL)) {
+                // TODO - build in error handling
+            }else{
+                
+            }
+        }
+    }
+    
     
     //--------------------------------------
     // MARK: My Methods
