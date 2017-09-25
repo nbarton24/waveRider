@@ -30,6 +30,57 @@ class Song {
         albumArtworkSmall = smallImage
     }
     
+    //Init from JSON object
+    init(track:[String:Any]){
+        
+        //Track URI
+        if let uri = (track["uri"] as? String){
+            self.uri = uri
+        }
+        
+        //Track Name
+        if let name = (track["name"] as? String){
+            self.title = name
+        }
+        
+        //Track Duration
+        if let length = (track["duration_ms"] as? Int){
+            self.duration = length
+        }
+        
+        //Track Album Name
+        if let album = (track["album"] as? [String:Any]){
+            if let albumTitle = (album["name"] as? String){
+                self.album = albumTitle
+            }
+            if let images = album["images"] as? [[String:Any]]{
+                if let image = images[1]["url"] as? String{
+                    self.albumArtworkLarge = image
+                }
+                if let imageSM = images[2]["url"] as? String{
+                    self.albumArtworkSmall = imageSM
+                }
+            }
+        }
+        
+        //Track Artists
+        if let artists = (track["artists"] as? [[String:Any]]) {
+            var spotFeats = [String]()
+            for j in 0..<artists.count{
+                if let artist = artists[j]["name"] as? String{
+                    if (j==0){
+                        self.artist = artist
+                    }else{
+                        spotFeats.append(artist)
+                        self.feats = spotFeats
+                    }
+                }
+            }
+        }
+        
+        //TODO: Handle errors
+    }
+    
     init(test:Int) {
         switch test{
             case 1:
