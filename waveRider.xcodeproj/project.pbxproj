@@ -21,6 +21,7 @@
 		CBBC59181F7828C500EE0AE8 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBC59171F7828C500EE0AE8 /* Song.swift */; };
 		CBBC591B1F78348700EE0AE8 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBC59191F78348700EE0AE8 /* PlayerViewController.swift */; };
 		CBBC591C1F78348700EE0AE8 /* PlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CBBC591A1F78348700EE0AE8 /* PlayerViewController.xib */; };
+		CBBC591E1F7891C200EE0AE8 /* PLRandomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBC591D1F7891C200EE0AE8 /* PLRandomizer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		CBBC59171F7828C500EE0AE8 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		CBBC59191F78348700EE0AE8 /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		CBBC591A1F78348700EE0AE8 /* PlayerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerViewController.xib; sourceTree = "<group>"; };
+		CBBC591D1F7891C200EE0AE8 /* PLRandomizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLRandomizer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 				CBBC59171F7828C500EE0AE8 /* Song.swift */,
 				CBBC59191F78348700EE0AE8 /* PlayerViewController.swift */,
 				CBBC591A1F78348700EE0AE8 /* PlayerViewController.xib */,
+				CBBC591D1F7891C200EE0AE8 /* PLRandomizer.swift */,
 			);
 			path = waveRider;
 			sourceTree = "<group>";
@@ -183,6 +186,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBBC591E1F7891C200EE0AE8 /* PLRandomizer.swift in Sources */,
 				CBBC59181F7828C500EE0AE8 /* Song.swift in Sources */,
 				CBBC59161F78273600EE0AE8 /* BridgeViewController.m in Sources */,
 				CBBC58F91F7820DC00EE0AE8 /* ViewController.swift in Sources */,
@@ -366,6 +370,7 @@
 				CBBC59071F7820DC00EE0AE8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

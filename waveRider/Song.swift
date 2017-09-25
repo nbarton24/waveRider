@@ -19,6 +19,10 @@ class Song {
     var feats = [String]()
     var duration = 0
     
+    init(){
+        
+    }
+    
     init(spotName:String,spotURI:String,trackArtist:String,trackCollabs:[String],trackLength:Int,albumTitle:String,largeImage:String,smallImage:String){
         title = spotName
         uri = spotURI

@@ -36,9 +36,29 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
     var player: SPTAudioStreamingController?
     var loginUrl: URL?
     
+    //Songs//
     var songs = [Song]()
     var currentSong:Song?
     var playedSongs = [Song]()
+    
+    var finishedLoadingPlaylist = false
+    
+    var played = [Song]()
+    var currentOptions = [Song]()
+    var nextFour = [Song]()
+    
+    var currentNextSelection = 0
+    
+    var song1 = Song()
+    var song2 = Song()
+    var song3 = Song()
+    var song4 = Song()
+    
+    //Timer//
+    var timer = Timer()
+    var currentTimerValue = 10
+    let maxTimeForTimer = 10
+    let setupTime = 5
     
     //--------------------------------------
     // MARK: Outlets
@@ -47,6 +67,16 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
     @IBOutlet weak var songTitleLabel: UILabel!
     @IBOutlet weak var songArtistLabel: UILabel!
     
+    @IBOutlet weak var albumArtworkImageView: UIImageView!
+    
+    //Voting
+    @IBOutlet weak var votingView: UIView!
+    @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var button1: UIButton!
+    @IBOutlet weak var button2: UIButton!
+    @IBOutlet weak var button3: UIButton!
+    @IBOutlet weak var button4: UIButton!
+    
     //--------------------------------------
     // MARK: iOS System Methods
     //--------------------------------------
@@ -54,18 +84,20 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         print("\n\nPlayback View Controller\n")
+        setupSession()
+        votingView.isHidden = true
         
-        let song1 = Song(test: 1)
-        let song2 = Song(test: 2)
-        let song3 = Song(test: 3)
-        let song4 = Song(test: 0)
+        albumArtworkImageView.image = #imageLiteral(resourceName: "defCover")
         
-        songs.append(song1)
-        songs.append(song2)
-        songs.append(song3)
-        songs.append(song4)
+        finishedLoadingPlaylist = false
+        setupPlaylist()
+        print("There are \(songs.count) songs in the playlist")
+        repeat{
+            //print("waiting..")
+        }while(!finishedLoadingPlaylist)
+        setupRound()
         
-        setup()
+        print("doing something else")
         // Do any additional setup after loading the view.
     }
 
@@ -85,9 +117,7 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
                 
             }else {
                 print("Player has no playback state")
-                //playSong(track:kShort1)
             }
-            //print("Player State - \(self.player!.playbackState.isPlaying)")
             
             //TODO: What if they aren't logged in?
             
@@ -101,7 +131,7 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
         
     }
     
-    func setup(){
+    func setupSession(){
         // Set up session
         let userDefaults = UserDefaults.standard
         
@@ -122,11 +152,12 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
     }
     
     //--------------------------------------
-    // MARK: Spotify Playback Methods
+    // MARK: Spotify Player Callback Methods
     //--------------------------------------
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didStartPlayingTrack trackUri: String!) {
         print("Song \(trackUri) started")
+        updateUI()
     }
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didStopPlayingTrack trackUri: String!) {
@@ -154,17 +185,13 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
             
         })
         
-//        let when = DispatchTime.now()+4
-//        DispatchQueue.main.asyncAfter(deadline:when){
-//            self.player!.skipNext(nil)
-//        }
-        
     }
     
     func updateUI(){
         if let _ = currentSong {
             songArtistLabel.text = currentSong!.artist
             songTitleLabel.text = currentSong!.title
+            
         }
         
     }
@@ -201,6 +228,198 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
         }
     }
     
+    func sendTracksRequest(url:String){
+        
+        var request:URLRequest?
+        let urlString = url
+        let urlToSend = URL(string: urlString)
+        let accessToken = session.accessToken
+        if let _ = urlToSend, let _ = accessToken {
+            request = URLRequest(url: urlToSend!)
+            //print("Access token - \(accessToken!)")
+            request!.setValue("Bearer \(accessToken!)", forHTTPHeaderField: "Authorization")
+            //Accept: application/json
+            request!.setValue("application/json", forHTTPHeaderField: "Accept")
+            request!.httpMethod = "GET"
+        }
+        
+        if let _ = request {
+            let session = URLSession.shared
+            session.dataTask(with: request!) { (data,response,err) in
+                if (err == nil){
+                    do{
+                        let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String:Any]
+                        
+                        //print("JSON Data From Response - \n\(json)")
+                        self.parseJSONforSongs(input: json)
+                    }catch let error as NSError {
+                        print("error- \(error)")
+                    }
+                }else{
+                    print("Fetch encountered an error - \(err?.localizedDescription)")
+                }
+                }.resume()
+        }
+    }
+    
+    func setupPlaylist(){
+        let currentUser = "npbarton33"
+        let currentPlaylist = "68EfLref6wQOgbTDF1tzJ0"
+        
+        let requestString = "https://api.spotify.com/v1/users/\(currentUser)/playlists/\(currentPlaylist)/tracks?fields=items(track(uri,name,duration_ms,album(name,images),artists(name)))"
+        
+        sendTracksRequest(url: requestString)
+    }
+    
+    func parseJSONforSongs(input:[String:Any]){
+        
+        
+        if let tracks = input["items"] as? [[String:AnyObject]] {
+            songs = []
+            for i in 0..<tracks.count{
+                let track = tracks[i]["track"] as? [String:Any]
+                if let currentTrack = track{
+                    let songFromTrack = Song(track: currentTrack)
+                    songs.append(songFromTrack)
+                }
+            }
+        }else {
+            print("could not parse song list")
+        }
+        finishedLoadingPlaylist = true
+        //displayPlaylistSongs()
+    }
+    
+    func displayPlaylistSongs(){
+        print("There are \(songs.count) songs in the playlist")
+//        for song in songs{
+//            song.printSong()
+//        }
+    }
+    
+    //--------------------------------------
+    // MARK: Voting Methods
+    //--------------------------------------
+    
+    func startTimer(){
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(PlayerViewController.updateTimer)), userInfo: nil, repeats: true)
+    }
+    
+    func endTimer() {
+        timer.invalidate()
+        finishRound()
+    }
+    
+    func pauseTimer(){
+        
+    }
+    
+    func updateTimer(){
+        if(currentTimerValue > 0){
+            currentTimerValue -= 1
+            timerLabel.text = "\(currentTimerValue)"
+        }
+        if(currentTimerValue == setupTime){
+            prepNextRound()
+        }
+        if (currentTimerValue == 0) {
+            endTimer()
+        }
+    }
+    
+    func setupRound(){
+        //print("There are \(songs.count) songs in the playlist")
+        currentTimerValue = maxTimeForTimer
+        currentNextSelection = 0
+        timerLabel.text = "\(currentTimerValue)"
+        
+        if (nextFour.count == 0){
+            fourRandom()
+        }
+        
+        currentOptions = nextFour
+        
+        //Update view and variables
+        song1 = currentOptions[0]
+        button1.setTitle("\(currentOptions[0].title)", for: .normal)
+        song2 = currentOptions[1]
+        button2.setTitle("\(currentOptions[1].title)", for: .normal)
+        song3 = currentOptions[2]
+        button3.setTitle("\(currentOptions[2].title)", for: .normal)
+        song4 = currentOptions[3]
+        button4.setTitle("\(currentOptions[3].title)", for: .normal)
+        
+        //Start timer
+        startTimer()
+    }
+    func finishRound(){
+        
+        //Set "winner" to be currentSong
+        if (currentNextSelection == 0){
+            //No votes were cast, select random one from list of nextFour
+            //print("No song selected when timer ended. Picking random from list")
+            currentNextSelection = Int(arc4random_uniform(UInt32(currentOptions.count)))+1
+            currentSong = currentOptions[currentNextSelection-1]
+        }else{
+            print("Song \(currentNextSelection) was selected (\(currentOptions[currentNextSelection-1].title))")
+            currentSong = currentOptions[currentNextSelection-1]
+        }
+        
+        playSong(track: currentSong!.uri)
+        
+        //Update label of "Currently playing" with the currentSong
+        if let _ = currentSong{
+            //nowPlayingLabel.text = "Now Playing: Song \(currentSong!)"
+            played.append(currentSong!)
+            currentOptions.remove(at: (currentNextSelection-1))
+        }else{
+            //nowPlayingLabel.text = "ERROR: No Song Selected"
+        }
+        
+        //Shuffle in "losers" after next four songs are selected
+        for i in 0..<currentOptions.count{
+            songs.append(currentOptions[i])
+        }
+        
+        //Dat new song tho
+        setupRound()
+    }
+    
+    func prepNextRound(){
+        fourRandom()
+    }
+    
+    func fourRandom(){
+        //Get 4 random songs
+        print("Counts - songs: \(songs.count) Played: \(played.count) ")
+        if(songs.count == 5){
+            print("Shuffling")
+            addToShuffle()
+        }
+        
+        nextFour = []
+        for _ in 0..<4{
+            let random = arc4random_uniform(UInt32(songs.count))
+            let randomSong = songs[Int(random)]
+            songs.remove(at: Int(random))
+            nextFour.append(randomSong)
+        }
+    }
+    
+    func addToShuffle(){
+        var numToGet = 0
+        if(played.count%2 == 0){
+            numToGet = (played.count/2)
+        }else{
+            numToGet = ((played.count-1)/2)
+        }
+        for _ in 0..<numToGet {
+            songs.append(played[0])
+            played.remove(at: 0)
+        }
+    }
+
+    
     //--------------------------------------
     // MARK: UI Methods
     //--------------------------------------
@@ -212,14 +431,40 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
     
     @IBAction func nextTrackButton(_ sender: Any) {
         if let _ = self.player {
-            self.player!.skipNext(nil)
+            //self.player!.skipNext(nil)
         }
     }
     
     @IBAction func lastTrackButton(_ sender: Any) {
-        print("last track")
+        votingView.isHidden = false
     }
     
+    @IBAction func dismissVotingView(_ sender: Any) {
+        votingView.isHidden = true
+    }
+    
+    @IBAction func buttonPressed(_ sender: UIButton) {
+        print("button pressed")
+        switch sender {
+        case button1:
+            currentNextSelection = 1
+            break
+        case button2:
+            currentNextSelection = 2
+            break
+        case button3:
+            currentNextSelection = 3
+            break
+        case button4:
+            currentNextSelection = 4
+            break
+        default:
+            currentNextSelection = 0
+        }
+        
+        print("Current Selection is Song \(currentNextSelection)")
+        
+    }
     
     
 }
