@@ -40,14 +40,19 @@ class ViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, SPTAu
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //let sessionValid = checkForValidSession()
+        //let authValid = checkAuthStatus()
+        
         setup()
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
+
     }
     
     //--------------------------------------
     // MARK: Spotify Methods
     //--------------------------------------
-
+    
     func initializaPlayer(authSession:SPTSession){
         if self.player == nil {
             
@@ -84,22 +89,40 @@ class ViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, SPTAu
     
     func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController!) {
         // after a user authenticates a session, the SPTAudioStreamingController is then initialized and this method called
-//        self.player?.playSpotifyURI("spotify:track:6ScJMrlpiLfZUGtWp4QIVt", startingWith: 0, startingWithPosition: 0, callback: { (error) in
-//            if (error == nil) {
-//                print("playing!")
-//            }else{
-//                print("Error - \(error)")
-//            }
-//            
-//        })
-//        
-//        self.player?.setIsPlaying(false, callback: {error in
-//            if (error == nil) {
-//                print("paused!")
-//            }else{
-//                print("Error - \(error)")
-//            }
-//        })
+        
+    }
+    
+    func checkForValidSession() -> Bool {
+        var isValidSession = false
+        let userDefaults = UserDefaults.standard
+        
+        if let sessionObj:AnyObject = userDefaults.object(forKey: "SpotifySession") as AnyObject? {
+            let sessionDataObj = sessionObj as! Data
+            
+            let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
+            
+            self.session = firstTimeSession
+            
+        }
+        
+        if let _ = self.session {
+            if(self.session!.isValid()){
+                isValidSession = true
+            }
+        }
+        
+        return isValidSession
+    }
+    
+    func checkAuthStatus() -> Bool {
+        
+        var isValidAuth = false
+        
+        if let _ = self.session.accessToken{
+            isValidAuth = true
+        }
+        
+        return isValidAuth
         
     }
     
@@ -111,6 +134,7 @@ class ViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, SPTAu
         print("Button Pressed")
         if UIApplication.shared.openURL(loginUrl!) {
             if (auth.canHandle(auth.redirectURL)) {
+                print("URL Opened")
                 // TODO - build in error handling
             }else{
                 
@@ -120,8 +144,13 @@ class ViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, SPTAu
     
     @IBAction func showViewButtonPressed(_ sender: Any) {
         
-        let pvc = PlayerViewController()
-        self.present(pvc, animated: true, completion: nil)
+        //let pvc = PlayerViewController()
+        //self.present(pvc, animated: true, completion: nil)
+
+        let pcVC = PlaylistChoiceViewController()
+        self.present(pcVC,animated: true,completion: nil)
+        
+        //showPlayerView()
         
     }
     
@@ -140,6 +169,11 @@ class ViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, SPTAu
         auth.requestedScopes = [SPTAuthStreamingScope, SPTAuthPlaylistReadPrivateScope, SPTAuthPlaylistModifyPublicScope, SPTAuthPlaylistModifyPrivateScope]
         loginUrl = auth.spotifyWebAuthenticationURL()
         
+    }
+    
+    func showPlayerView(){
+        let pvc = PlayerViewController()
+        self.present(pvc, animated: true, completion: nil)
     }
 
 //End VC

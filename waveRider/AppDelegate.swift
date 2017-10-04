@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var auth = SPTAuth()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        print("AD - didFinishLaunchingWithOptions")
         // Override point for customization after application launch.
         auth.redirectURL     = URL(string: "waverider://returnAfterLogin")
         auth.sessionUserDefaultsKey = "current session"
@@ -28,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // 1
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        
+        print("AD - login callback")
         // called when user signs into spotify. Session data saved into user defaults, then notification posted to call updateAfterFirstLogin in ViewController.swift. Modeled off recommneded auth flow suggested by Spotify documentation
         
         if auth.canHandle(auth.redirectURL) {

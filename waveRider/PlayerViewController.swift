@@ -36,6 +36,8 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
     var player: SPTAudioStreamingController?
     var loginUrl: URL?
     
+    var passedPlaylist:Playlist?
+    
     //Songs//
     var songs = [Song]()
     var currentSong:Song?
@@ -67,7 +69,7 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
     @IBOutlet weak var songTitleLabel: UILabel!
     @IBOutlet weak var songArtistLabel: UILabel!
     
-    @IBOutlet weak var albumArtworkImageView: UIImageView!
+    //@IBOutlet weak var albumArtworkImageView: UIImageView!
     
     //Voting
     @IBOutlet weak var votingView: UIView!
@@ -83,15 +85,22 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("\n\nPlayback View Controller\n")
+        //print("\n\nPlayback View Controller\n")
         setupSession()
-        votingView.isHidden = true
+        //votingView.isHidden = true
         
-        albumArtworkImageView.image = #imageLiteral(resourceName: "defCover")
-        
+        //albumArtworkImageView.image = #imageLiteral(resourceName: "defCover")
         finishedLoadingPlaylist = false
-        setupPlaylist()
-        print("There are \(songs.count) songs in the playlist")
+        if let _ = passedPlaylist{
+            //print("Yay here's a playlist!")
+            //print("URL - \(passedPlaylist!.url)")
+            setupSpecificPlaylist(url: passedPlaylist!.url)
+        }else{
+            //print("Nope no playlist")
+            setupPlaylist()
+        }
+        
+        //print("There are \(songs.count) songs in the playlist")
         repeat{
             //print("waiting..")
         }while(!finishedLoadingPlaylist)
@@ -107,24 +116,22 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
     
     func initializaPlayer(authSession:SPTSession){
         if self.player == nil {
-            print("Player is nil coming in")
+            //print("Player is nil coming in")
             self.player = SPTAudioStreamingController.sharedInstance()
             self.player!.playbackDelegate = self
             self.player!.delegate = self
-            print("Player Logged in - \(self.player!.loggedIn)")
+            //print("Player Logged in - \(self.player!.loggedIn)")
             if let _ = self.player?.playbackState{
-                print("Player has playback state")
+                //print("Player has playback state")
                 
             }else {
-                print("Player has no playback state")
+                //print("Player has no playback state")
             }
             
             //TODO: What if they aren't logged in?
             
-            /*try! player?.start(withClientId: auth.clientID)
-            self.player!.login(withAccessToken: authSession.accessToken)*/
         }else{
-            print("Player is not nil coming in")
+            //print("Player is not nil coming in")
             //TODO: How is the player not nil?
             //TODO: Handle the situation where player is not nil
         }
@@ -141,10 +148,10 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
             let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
             
             self.session = firstTimeSession
-            print("Session has been set")
+            //print("Session has been set")
             initializaPlayer(authSession: session)
         }else{
-            print("No session could be found")
+            //print("No session could be found")
             //TODO: Create new session if none found
         }
         
@@ -177,7 +184,7 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
         
         self.player?.playSpotifyURI(track, startingWith: 0, startingWithPosition: 0, callback: { (error) in
             if (error == nil) {
-                print("playing!")
+                //print("playing!")
                 
             }else{
                 print("Error - \(error)")
@@ -198,7 +205,16 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
     
     func changePlaybackState(){
         if let pbs = self.player?.playbackState{
-            self.player!.setIsPlaying((!pbs.isPlaying), callback: nil)
+            //self.player!.setIsPlaying((!pbs.isPlaying), callback: nil)
+            
+            if (pbs.isPlaying){
+                pauseTimer()
+                self.player!.setIsPlaying(false, callback: nil)
+            }else{
+                startTimer()
+                self.player!.setIsPlaying(true, callback: nil)
+            }
+            
         }else{
             playNextSong()
         }
@@ -215,7 +231,7 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
             playSong(track: currentSong!.uri)
             updateUI()
         }else{
-            print("No more songs in playlist")
+            //print("No more songs in playlist")
         }
     }
     
@@ -224,7 +240,7 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
         if (playedSongs.count>0){
             print("Functionality not yet available")
         }else{
-            print("No songs have been played")
+            //print("No songs have been played")
         }
     }
     
@@ -271,6 +287,16 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
         sendTracksRequest(url: requestString)
     }
     
+    func setupSpecificPlaylist(url:String){
+        if (url == ""){
+            print("This didn't work")
+            return
+        }
+        let requestString = "\(url)/tracks?fields=items(track(uri,name,duration_ms,album(name,images),artists(name)))"
+        
+        sendTracksRequest(url: requestString)
+    }
+    
     func parseJSONforSongs(input:[String:Any]){
         
         
@@ -291,7 +317,7 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
     }
     
     func displayPlaylistSongs(){
-        print("There are \(songs.count) songs in the playlist")
+        //print("There are \(songs.count) songs in the playlist")
 //        for song in songs{
 //            song.printSong()
 //        }
@@ -311,7 +337,7 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
     }
     
     func pauseTimer(){
-        
+        timer.invalidate()
     }
     
     func updateTimer(){
@@ -361,7 +387,7 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
             currentNextSelection = Int(arc4random_uniform(UInt32(currentOptions.count)))+1
             currentSong = currentOptions[currentNextSelection-1]
         }else{
-            print("Song \(currentNextSelection) was selected (\(currentOptions[currentNextSelection-1].title))")
+            //print("Song \(currentNextSelection) was selected (\(currentOptions[currentNextSelection-1].title))")
             currentSong = currentOptions[currentNextSelection-1]
         }
         
@@ -425,7 +451,7 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
     //--------------------------------------
     
     @IBAction func playPauseButton(_ sender: Any) {
-        print("play/pause")
+        //print("play/pause")
         changePlaybackState()
     }
     
@@ -436,15 +462,15 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
     }
     
     @IBAction func lastTrackButton(_ sender: Any) {
-        votingView.isHidden = false
+        //votingView.isHidden = false
     }
     
     @IBAction func dismissVotingView(_ sender: Any) {
-        votingView.isHidden = true
+        //votingView.isHidden = true
     }
     
     @IBAction func buttonPressed(_ sender: UIButton) {
-        print("button pressed")
+        //print("button pressed")
         switch sender {
         case button1:
             currentNextSelection = 1
@@ -462,7 +488,7 @@ class PlayerViewController: UIViewController, SPTAudioStreamingPlaybackDelegate,
             currentNextSelection = 0
         }
         
-        print("Current Selection is Song \(currentNextSelection)")
+        //print("Current Selection is Song \(currentNextSelection)")
         
     }
     

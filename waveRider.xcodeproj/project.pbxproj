@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB9A93E71F8465CF000FF6EF /* PlaylistChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9A93E51F8465CF000FF6EF /* PlaylistChoiceViewController.swift */; };
+		CB9A93E81F8465CF000FF6EF /* PlaylistChoiceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB9A93E61F8465CF000FF6EF /* PlaylistChoiceViewController.xib */; };
+		CB9A93EA1F846B88000FF6EF /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9A93E91F846B88000FF6EF /* Playlist.swift */; };
 		CBBC58F71F7820DC00EE0AE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBC58F61F7820DC00EE0AE8 /* AppDelegate.swift */; };
 		CBBC58F91F7820DC00EE0AE8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBC58F81F7820DC00EE0AE8 /* ViewController.swift */; };
 		CBBC58FC1F7820DC00EE0AE8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBBC58FA1F7820DC00EE0AE8 /* Main.storyboard */; };
@@ -25,6 +28,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CB9A93E51F8465CF000FF6EF /* PlaylistChoiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistChoiceViewController.swift; sourceTree = "<group>"; };
+		CB9A93E61F8465CF000FF6EF /* PlaylistChoiceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaylistChoiceViewController.xib; sourceTree = "<group>"; };
+		CB9A93E91F846B88000FF6EF /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		CBBC58F31F7820DC00EE0AE8 /* waveRider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = waveRider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBBC58F61F7820DC00EE0AE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CBBC58F81F7820DC00EE0AE8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +68,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB3CB5531F7CA3BF00AB2CF3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CBBC59171F7828C500EE0AE8 /* Song.swift */,
+				CB9A93E91F846B88000FF6EF /* Playlist.swift */,
+				CBBC591D1F7891C200EE0AE8 /* PLRandomizer.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		CB3CB5541F7CA3C900AB2CF3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CBBC58FA1F7820DC00EE0AE8 /* Main.storyboard */,
+				CBBC58FF1F7820DC00EE0AE8 /* LaunchScreen.storyboard */,
+				CBBC591A1F78348700EE0AE8 /* PlayerViewController.xib */,
+				CB9A93E61F8465CF000FF6EF /* PlaylistChoiceViewController.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		CB3CB5551F7CA3D800AB2CF3 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CBBC59191F78348700EE0AE8 /* PlayerViewController.swift */,
+				CBBC58F81F7820DC00EE0AE8 /* ViewController.swift */,
+				CB9A93E51F8465CF000FF6EF /* PlaylistChoiceViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		CB3CB5561F7CA41300AB2CF3 /* Bridging */ = {
+			isa = PBXGroup;
+			children = (
+				CBBC59131F78273500EE0AE8 /* waveRider-Bridging-Header.h */,
+				CBBC59151F78273600EE0AE8 /* BridgeViewController.m */,
+				CBBC59141F78273600EE0AE8 /* BridgeViewController.h */,
+			);
+			name = Bridging;
+			sourceTree = "<group>";
+		};
 		CBBC58EA1F7820DC00EE0AE8 = {
 			isa = PBXGroup;
 			children = (
@@ -86,18 +133,12 @@
 			isa = PBXGroup;
 			children = (
 				CBBC58F61F7820DC00EE0AE8 /* AppDelegate.swift */,
-				CBBC58F81F7820DC00EE0AE8 /* ViewController.swift */,
-				CBBC58FA1F7820DC00EE0AE8 /* Main.storyboard */,
 				CBBC58FD1F7820DC00EE0AE8 /* Assets.xcassets */,
-				CBBC58FF1F7820DC00EE0AE8 /* LaunchScreen.storyboard */,
 				CBBC59021F7820DC00EE0AE8 /* Info.plist */,
-				CBBC59141F78273600EE0AE8 /* BridgeViewController.h */,
-				CBBC59151F78273600EE0AE8 /* BridgeViewController.m */,
-				CBBC59131F78273500EE0AE8 /* waveRider-Bridging-Header.h */,
-				CBBC59171F7828C500EE0AE8 /* Song.swift */,
-				CBBC59191F78348700EE0AE8 /* PlayerViewController.swift */,
-				CBBC591A1F78348700EE0AE8 /* PlayerViewController.xib */,
-				CBBC591D1F7891C200EE0AE8 /* PLRandomizer.swift */,
+				CB3CB5551F7CA3D800AB2CF3 /* Controller */,
+				CB3CB5541F7CA3C900AB2CF3 /* View */,
+				CB3CB5531F7CA3BF00AB2CF3 /* Model */,
+				CB3CB5561F7CA41300AB2CF3 /* Bridging */,
 			);
 			path = waveRider;
 			sourceTree = "<group>";
@@ -175,6 +216,7 @@
 				CBBC59011F7820DC00EE0AE8 /* LaunchScreen.storyboard in Resources */,
 				CBBC591C1F78348700EE0AE8 /* PlayerViewController.xib in Resources */,
 				CBBC58FE1F7820DC00EE0AE8 /* Assets.xcassets in Resources */,
+				CB9A93E81F8465CF000FF6EF /* PlaylistChoiceViewController.xib in Resources */,
 				CBBC58FC1F7820DC00EE0AE8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -188,6 +230,8 @@
 			files = (
 				CBBC591E1F7891C200EE0AE8 /* PLRandomizer.swift in Sources */,
 				CBBC59181F7828C500EE0AE8 /* Song.swift in Sources */,
+				CB9A93E71F8465CF000FF6EF /* PlaylistChoiceViewController.swift in Sources */,
+				CB9A93EA1F846B88000FF6EF /* Playlist.swift in Sources */,
 				CBBC59161F78273600EE0AE8 /* BridgeViewController.m in Sources */,
 				CBBC58F91F7820DC00EE0AE8 /* ViewController.swift in Sources */,
 				CBBC58F71F7820DC00EE0AE8 /* AppDelegate.swift in Sources */,
